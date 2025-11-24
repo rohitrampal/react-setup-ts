@@ -1,0 +1,94 @@
+import { ReactNode } from 'react'
+import { Box, Typography, Button } from '@mui/material'
+import { ErrorOutline, Refresh } from '@mui/icons-material'
+import { useTranslation } from 'react-i18next'
+import { UseQueryResult } from '@tanstack/react-query'
+
+interface QueryErrorFallbackProps {
+  error: Error | null
+  refetch?: () => void
+  isLoading?: boolean
+  children?: ReactNode
+}
+
+export const QueryErrorFallback = ({
+  error,
+  refetch,
+  isLoading,
+  children
+}: QueryErrorFallbackProps) => {
+  const { t } = useTranslation()
+
+  if (!error) {
+    return <>{children}</>
+  }
+
+  const isNetworkError = error.message?.includes('Network') ||
+                         error.message?.includes('fetch') ||
+                         error.message?.includes('timeout')
+
+  const isUndefinedError = error.message?.includes('undefined') ||
+                          error.message?.includes('Cannot read')
+
+  return (
+    <Box
+      className="tw-p-4 tw-bg-red-50 tw-rounded-lg tw-border tw-border-red-200"
+      role="alert"
+      aria-live="polite"
+    >
+      <Box className="tw-flex tw-items-start tw-gap-3">
+        <ErrorOutline className="tw-text-red-500 tw-mt-1" />
+        <Box className="tw-flex-1">
+          <Typography variant="h6" component="h3" className="tw-mb-1 tw-text-red-800">
+            {isNetworkError
+              ? t('errors.networkError')
+              : isUndefinedError
+              ? t('errors.dataError')
+              : t('errors.queryError')}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" className="tw-mb-3">
+            {isNetworkError
+              ? t('errors.networkErrorDescription')
+              : isUndefinedError
+              ? t('errors.dataErrorDescription')
+              : t('errors.queryErrorDescription')}
+          </Typography>
+          {error.message && (
+            <Typography
+              variant="caption"
+              className="tw-block tw-mb-3 tw-p-2 tw-bg-white tw-rounded tw-font-mono tw-text-xs"
+            >
+              {error.message}
+            </Typography>
+          )}
+          {refetch && (
+            <Button
+              size="small"
+              variant="outlined"
+              startIcon={<Refresh />}
+              onClick={() => refetch()}
+              disabled={isLoading}
+              aria-label={t('errors.retry')}
+            >
+              {isLoading ? t('common.loading') : t('errors.retry')}
+            </Button>
+          )}
+        </Box>
+      </Box>
+    </Box>
+  )
+}
+
+export const withQueryErrorFallback = <T,>(
+  queryResult: UseQueryResult<T>,
+  fallback?: ReactNode
+) => {
+  const { error, refetch, isLoading } = queryResult
+
+  if (error) {
+    return <QueryErrorFallback error={error as Error} refetch={refetch} isLoading={isLoading} />
+  }
+
+  return fallback || null
+}
+
