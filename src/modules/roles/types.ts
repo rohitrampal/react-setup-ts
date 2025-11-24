@@ -22,7 +22,7 @@ export const ROLE_PERMISSIONS: Record<UserRole, RolePermissions> = {
     canViewTables: false,
     canManageTables: false,
     canViewAnalytics: false,
-    canManageUsers: false
+    canManageUsers: false,
   },
   waiter: {
     canViewOrders: true,
@@ -33,7 +33,7 @@ export const ROLE_PERMISSIONS: Record<UserRole, RolePermissions> = {
     canViewTables: true,
     canManageTables: false,
     canViewAnalytics: false,
-    canManageUsers: false
+    canManageUsers: false,
   },
   chef: {
     canViewOrders: true,
@@ -44,7 +44,7 @@ export const ROLE_PERMISSIONS: Record<UserRole, RolePermissions> = {
     canViewTables: false,
     canManageTables: false,
     canViewAnalytics: false,
-    canManageUsers: false
+    canManageUsers: false,
   },
   manager: {
     canViewOrders: true,
@@ -55,7 +55,7 @@ export const ROLE_PERMISSIONS: Record<UserRole, RolePermissions> = {
     canViewTables: true,
     canManageTables: true,
     canViewAnalytics: true,
-    canManageUsers: true
+    canManageUsers: true,
   },
   admin: {
     canViewOrders: true,
@@ -66,7 +66,6 @@ export const ROLE_PERMISSIONS: Record<UserRole, RolePermissions> = {
     canViewTables: true,
     canManageTables: true,
     canViewAnalytics: true,
-    canManageUsers: true
-  }
+    canManageUsers: true,
+  },
 }
-

@@ -11,7 +11,7 @@ export class CacheManager {
     this.cache.set(key, {
       data,
       timestamp: Date.now(),
-      ttl
+      ttl,
     })
   }
 
@@ -65,4 +65,3 @@ export class CacheManager {
 setInterval(() => {
   CacheManager.cleanup()
 }, 60000)
-

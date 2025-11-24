@@ -5,7 +5,7 @@ import {
   DialogContent,
   DialogActions,
   IconButton,
-  Typography
+  Typography,
 } from '@mui/material'
 import { Close as CloseIcon } from '@mui/icons-material'
 import { ReactNode } from 'react'
@@ -46,36 +46,26 @@ export const Modal = ({
       {...props}
     >
       {title && (
-        <DialogTitle
-          id={titleId}
-          className="tw-flex tw-items-center tw-justify-between tw-pr-4"
-        >
-          <Typography variant="h6" component="span">
+        <DialogTitle id={titleId} className='tw-flex tw-items-center tw-justify-between tw-pr-4'>
+          <Typography variant='h6' component='span'>
             {title}
           </Typography>
           {closeButton && (
             <IconButton
               onClick={onClose}
-              aria-label="Close modal"
-              className="tw-ml-auto"
-              size="small"
+              aria-label='Close modal'
+              className='tw-ml-auto'
+              size='small'
             >
               <CloseIcon />
             </IconButton>
           )}
         </DialogTitle>
       )}
-      <DialogContent
-        id={descriptionId}
-        className="tw-py-4"
-        aria-describedby={descriptionId}
-      >
+      <DialogContent id={descriptionId} className='tw-py-4' aria-describedby={descriptionId}>
         {children}
       </DialogContent>
-      {actions && (
-        <DialogActions className="tw-px-6 tw-pb-4">{actions}</DialogActions>
-      )}
+      {actions && <DialogActions className='tw-px-6 tw-pb-4'>{actions}</DialogActions>}
     </Dialog>
   )
 }
-

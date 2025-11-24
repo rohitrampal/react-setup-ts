@@ -31,7 +31,6 @@ export const useRole = () => {
     isWaiter: role === 'waiter',
     isChef: role === 'chef',
     isManager: role === 'manager',
-    isAdmin: role === 'admin'
+    isAdmin: role === 'admin',
   }
 }
-

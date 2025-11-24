@@ -19,30 +19,27 @@ export const ProfileForm = () => {
 
   const profileSchema = yup.object({
     name: yup.string().required(t('auth.nameRequired')),
-    email: yup
-      .string()
-      .email(t('auth.invalidEmail'))
-      .required(t('auth.emailRequired'))
+    email: yup.string().email(t('auth.invalidEmail')).required(t('auth.emailRequired')),
   })
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
   } = useForm<ProfileFormData>({
     resolver: yupResolver(profileSchema),
     defaultValues: {
       name: user?.name || '',
-      email: user?.email || ''
-    }
+      email: user?.email || '',
+    },
   })
 
   useEffect(() => {
     if (user) {
       reset({
         name: user.name,
-        email: user.email
+        email: user.email,
       })
     }
   }, [user, reset])
@@ -50,15 +47,17 @@ export const ProfileForm = () => {
   const onSubmit = async (data: ProfileFormData) => {
     const sanitizedData = {
       name: SecurityUtils.sanitizeInput(data.name),
-      email: SecurityUtils.sanitizeInput(data.email)
+      email: SecurityUtils.sanitizeInput(data.email),
     }
-    console.log('Profile update:', sanitizedData)
+    // TODO: Implement profile update API call
+    // Profile update will be implemented here
+    void sanitizedData
   }
 
   return (
     <Card title={t('profile.profileInformation')} aria-label={t('profile.title')}>
       <Box
-        component="form"
+        component='form'
         onSubmit={handleSubmit(onSubmit)}
         aria-label={t('profile.profileInformation')}
         noValidate
@@ -69,24 +68,24 @@ export const ProfileForm = () => {
           error={!!errors.name}
           helperText={errors.name?.message}
           required
-          aria-required="true"
+          aria-required='true'
         />
 
         <Input
           {...register('email')}
           label={t('profile.email')}
-          type="email"
+          type='email'
           error={!!errors.email}
           helperText={errors.email?.message}
           required
-          autoComplete="email"
-          aria-required="true"
+          autoComplete='email'
+          aria-required='true'
         />
 
         <Button
-          type="submit"
-          variant="contained"
-          className="tw-mt-4"
+          type='submit'
+          variant='contained'
+          className='tw-mt-4'
           aria-label={t('profile.updateProfile')}
         >
           {t('profile.updateProfile')}
@@ -95,4 +94,3 @@ export const ProfileForm = () => {
     </Card>
   )
 }
-

@@ -1,4 +1,4 @@
-import { useQuery, UseQueryResult } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { useState } from 'react'
 import { apiClient } from '@/services/api/client'
 import { ApiResponse } from '@/services/api/types'
@@ -11,7 +11,7 @@ export interface PaginatedResponse<T> {
   totalPages: number
 }
 
-export interface UsePaginationOptions<T> {
+export interface UsePaginationOptions {
   endpoint: string
   pageSize?: number
   enabled?: boolean
@@ -35,9 +35,7 @@ export interface UsePaginationReturn<T> {
   hasPreviousPage: boolean
 }
 
-export function usePagination<T = unknown>(
-  options: UsePaginationOptions<T>
-): UsePaginationReturn<T> {
+export function usePagination<T = unknown>(options: UsePaginationOptions): UsePaginationReturn<T> {
   const { endpoint, pageSize = 10, enabled = true, staleTime } = options
   const [page, setPage] = useState(1)
 
@@ -46,19 +44,19 @@ export function usePagination<T = unknown>(
     isLoading,
     isError,
     error,
-    refetch
+    refetch,
   } = useQuery<ApiResponse<PaginatedResponse<T>>>({
     queryKey: [endpoint, 'pagination', page, pageSize],
     queryFn: async () => {
       return await apiClient.get<PaginatedResponse<T>>(endpoint, {
         params: { page, pageSize },
         skipCache: false,
-        ttl: 30000
+        ttl: 30000,
       })
     },
     enabled,
     staleTime: staleTime || 30000,
-    placeholderData: (previousData) => previousData
+    placeholderData: previousData => previousData,
   })
 
   const paginatedData = response?.data
@@ -67,13 +65,13 @@ export function usePagination<T = unknown>(
 
   const nextPage = () => {
     if (page < totalPages) {
-      setPage((prev) => prev + 1)
+      setPage(prev => prev + 1)
     }
   }
 
   const previousPage = () => {
     if (page > 1) {
-      setPage((prev) => prev - 1)
+      setPage(prev => prev - 1)
     }
   }
 
@@ -91,7 +89,6 @@ export function usePagination<T = unknown>(
     nextPage,
     previousPage,
     hasNextPage: page < totalPages,
-    hasPreviousPage: page > 1
+    hasPreviousPage: page > 1,
   }
 }
-

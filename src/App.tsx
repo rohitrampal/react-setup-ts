@@ -14,20 +14,18 @@ import '@/styles/globals.css'
 
 // Lazy load all pages for code splitting
 const LoginPage = lazy(() =>
-  import('@/modules/login').then((module) => ({ default: module.LoginPage }))
+  import('@/modules/login').then(module => ({ default: module.LoginPage }))
 )
 
 const DashboardPage = lazy(() =>
-  import('@/modules/dashboard').then((module) => ({ default: module.DashboardPage }))
+  import('@/modules/dashboard').then(module => ({ default: module.DashboardPage }))
 )
 
 const ProfilePage = lazy(() =>
-  import('@/modules/profile').then((module) => ({ default: module.ProfilePage }))
+  import('@/modules/profile').then(module => ({ default: module.ProfilePage }))
 )
 
-const ListPage = lazy(() =>
-  import('@/modules/list').then((module) => ({ default: module.ListPage }))
-)
+const ListPage = lazy(() => import('@/modules/list').then(module => ({ default: module.ListPage })))
 
 function App() {
   return (
@@ -36,58 +34,58 @@ function App() {
         <HelmetProvider>
           <ThemeWrapper>
             <BrowserRouter>
-            <Layout>
-              <Routes>
-                <Route
-                  path="/login"
-                  element={
-                    <PageSuspense>
-                      <ErrorBoundary>
-                        <LoginPage />
-                      </ErrorBoundary>
-                    </PageSuspense>
-                  }
-                />
-                <Route
-                  path="/dashboard"
-                  element={
-                    <ProtectedRoute>
+              <Layout>
+                <Routes>
+                  <Route
+                    path='/login'
+                    element={
                       <PageSuspense>
                         <ErrorBoundary>
-                          <DashboardPage />
+                          <LoginPage />
                         </ErrorBoundary>
                       </PageSuspense>
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/profile"
-                  element={
-                    <ProtectedRoute>
-                      <PageSuspense>
-                        <ErrorBoundary>
-                          <ProfilePage />
-                        </ErrorBoundary>
-                      </PageSuspense>
-                    </ProtectedRoute>
-                  }
-                />
-                <Route
-                  path="/list"
-                  element={
-                    <ProtectedRoute>
-                      <PageSuspense>
-                        <ErrorBoundary>
-                          <ListPage />
-                        </ErrorBoundary>
-                      </PageSuspense>
-                    </ProtectedRoute>
-                  }
-                />
-                <Route path="/" element={<Navigate to="/dashboard" replace />} />
-                <Route path="*" element={<Navigate to="/dashboard" replace />} />
-              </Routes>
-            </Layout>
+                    }
+                  />
+                  <Route
+                    path='/dashboard'
+                    element={
+                      <ProtectedRoute>
+                        <PageSuspense>
+                          <ErrorBoundary>
+                            <DashboardPage />
+                          </ErrorBoundary>
+                        </PageSuspense>
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path='/profile'
+                    element={
+                      <ProtectedRoute>
+                        <PageSuspense>
+                          <ErrorBoundary>
+                            <ProfilePage />
+                          </ErrorBoundary>
+                        </PageSuspense>
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path='/list'
+                    element={
+                      <ProtectedRoute>
+                        <PageSuspense>
+                          <ErrorBoundary>
+                            <ListPage />
+                          </ErrorBoundary>
+                        </PageSuspense>
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route path='/' element={<Navigate to='/dashboard' replace />} />
+                  <Route path='*' element={<Navigate to='/dashboard' replace />} />
+                </Routes>
+              </Layout>
             </BrowserRouter>
           </ThemeWrapper>
         </HelmetProvider>
@@ -98,4 +96,3 @@ function App() {
 }
 
 export default App
-

@@ -22,22 +22,16 @@ export const LoginForm = () => {
   const [loading, setLoading] = useState(false)
 
   const loginSchema = yup.object({
-    email: yup
-      .string()
-      .email(t('auth.invalidEmail'))
-      .required(t('auth.emailRequired')),
-    password: yup
-      .string()
-      .min(6, t('auth.passwordMinLength'))
-      .required(t('auth.passwordRequired'))
+    email: yup.string().email(t('auth.invalidEmail')).required(t('auth.emailRequired')),
+    password: yup.string().min(6, t('auth.passwordMinLength')).required(t('auth.passwordRequired')),
   })
 
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm<LoginFormData>({
-    resolver: yupResolver(loginSchema)
+    resolver: yupResolver(loginSchema),
   })
 
   const onSubmit = async (data: LoginFormData) => {
@@ -47,7 +41,7 @@ export const LoginForm = () => {
     try {
       const sanitizedData = {
         email: SecurityUtils.sanitizeInput(data.email),
-        password: data.password
+        password: data.password,
       }
       await login(sanitizedData)
     } catch (err) {
@@ -59,18 +53,18 @@ export const LoginForm = () => {
 
   return (
     <Box
-      component="form"
+      component='form'
       onSubmit={handleSubmit(onSubmit)}
-      className="tw-w-full tw-max-w-md tw-mx-auto tw-p-6"
-      aria-label="Login form"
+      className='tw-w-full tw-max-w-md tw-mx-auto tw-p-6'
+      aria-label='Login form'
       noValidate
     >
-      <Typography variant="h4" component="h1" className="tw-mb-6 tw-text-center">
+      <Typography variant='h4' component='h1' className='tw-mb-6 tw-text-center'>
         {t('auth.login')}
       </Typography>
 
       {error && (
-        <Alert severity="error" dismissible onDismiss={() => setError(null)}>
+        <Alert severity='error' dismissible onDismiss={() => setError(null)}>
           {error}
         </Alert>
       )}
@@ -78,44 +72,44 @@ export const LoginForm = () => {
       <Input
         {...register('email')}
         label={t('auth.email')}
-        type="email"
+        type='email'
         error={!!errors.email}
         helperText={errors.email?.message}
         required
-        autoComplete="email"
-        aria-required="true"
+        autoComplete='email'
+        aria-required='true'
       />
 
       <Input
         {...register('password')}
         label={t('auth.password')}
-        type="password"
+        type='password'
         error={!!errors.password}
         helperText={errors.password?.message}
         required
-        autoComplete="current-password"
-        aria-required="true"
+        autoComplete='current-password'
+        aria-required='true'
       />
 
       <Button
-        type="submit"
-        variant="contained"
+        type='submit'
+        variant='contained'
         fullWidth
         loading={loading}
-        className="tw-mt-4"
+        className='tw-mt-4'
         aria-label={t('auth.login')}
       >
         {t('auth.login')}
       </Button>
 
-      <Box className="tw-mt-4 tw-text-center">
+      <Box className='tw-mt-4 tw-text-center'>
         <Link
-          href="/register"
-          onClick={(e) => {
+          href='/register'
+          onClick={e => {
             e.preventDefault()
             navigate('/register')
           }}
-          className="tw-text-primary-600 hover:tw-underline"
+          className='tw-text-primary-600 hover:tw-underline'
           aria-label={t('auth.register')}
         >
           {t('auth.dontHaveAccount')}
@@ -124,4 +118,3 @@ export const LoginForm = () => {
     </Box>
   )
 }
-

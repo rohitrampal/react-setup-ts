@@ -10,33 +10,33 @@ const baseTheme: ThemeOptions = {
       'Roboto',
       '"Helvetica Neue"',
       'Arial',
-      'sans-serif'
-    ].join(',')
+      'sans-serif',
+    ].join(','),
   },
   shape: {
-    borderRadius: 8
+    borderRadius: 8,
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
           textTransform: 'none',
-          fontWeight: 500
-        }
-      }
+          fontWeight: 500,
+        },
+      },
     },
     MuiTextField: {
       styleOverrides: {
         root: {
           '& .MuiOutlinedInput-root': {
             '&:hover fieldset': {
-              borderColor: 'var(--tw-color-primary-500)'
-            }
-          }
-        }
-      }
-    }
-  }
+              borderColor: 'var(--tw-color-primary-500)',
+            },
+          },
+        },
+      },
+    },
+  },
 }
 
 export const lightTheme = createTheme({
@@ -47,23 +47,23 @@ export const lightTheme = createTheme({
       main: '#2196f3',
       light: '#64b5f6',
       dark: '#1976d2',
-      contrastText: '#ffffff'
+      contrastText: '#ffffff',
     },
     secondary: {
       main: '#9c27b0',
       light: '#ba68c8',
       dark: '#7b1fa2',
-      contrastText: '#ffffff'
+      contrastText: '#ffffff',
     },
     background: {
       default: '#f5f5f5',
-      paper: '#ffffff'
+      paper: '#ffffff',
     },
     text: {
       primary: 'rgba(0, 0, 0, 0.87)',
-      secondary: 'rgba(0, 0, 0, 0.6)'
-    }
-  }
+      secondary: 'rgba(0, 0, 0, 0.6)',
+    },
+  },
 })
 
 export const darkTheme = createTheme({
@@ -74,23 +74,23 @@ export const darkTheme = createTheme({
       main: '#90caf9',
       light: '#e3f2fd',
       dark: '#42a5f5',
-      contrastText: '#000000'
+      contrastText: '#000000',
     },
     secondary: {
       main: '#ce93d8',
       light: '#f3e5f5',
       dark: '#ab47bc',
-      contrastText: '#000000'
+      contrastText: '#000000',
     },
     background: {
       default: '#121212',
-      paper: '#1e1e1e'
+      paper: '#1e1e1e',
     },
     text: {
       primary: '#ffffff',
-      secondary: 'rgba(255, 255, 255, 0.7)'
-    }
-  }
+      secondary: 'rgba(255, 255, 255, 0.7)',
+    },
+  },
 })
 
 export const getTheme = (mode: PaletteMode) => {
@@ -98,4 +98,3 @@ export const getTheme = (mode: PaletteMode) => {
 }
 
 export type ThemeMode = 'light' | 'dark'
-

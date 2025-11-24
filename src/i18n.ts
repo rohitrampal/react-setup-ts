@@ -7,14 +7,14 @@ import paTranslations from './locales/pa.json'
 
 const resources = {
   en: {
-    translation: enTranslations
+    translation: enTranslations,
   },
   hi: {
-    translation: hiTranslations
+    translation: hiTranslations,
   },
   pa: {
-    translation: paTranslations
-  }
+    translation: paTranslations,
+  },
 }
 
 i18n
@@ -26,17 +26,16 @@ i18n
     supportedLngs: ['en', 'hi', 'pa'],
     defaultNS: 'translation',
     interpolation: {
-      escapeValue: false
+      escapeValue: false,
     },
     detection: {
       order: ['localStorage', 'navigator', 'htmlTag'],
       caches: ['localStorage'],
-      lookupLocalStorage: 'i18nextLng'
+      lookupLocalStorage: 'i18nextLng',
     },
     react: {
-      useSuspense: false
-    }
+      useSuspense: false,
+    },
   })
 
 export default i18n
-

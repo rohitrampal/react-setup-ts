@@ -12,7 +12,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer
+  ResponsiveContainer,
 } from 'recharts'
 import { ReactNode } from 'react'
 import { classNames } from '@/utils/classNames'
@@ -46,34 +46,29 @@ export const Graph = ({
   yAxisKey = 'value',
   colors = COLORS,
   className,
-  'aria-label': ariaLabel
+  'aria-label': ariaLabel,
 }: GraphProps) => {
   const renderChart = (): ReactNode => {
     switch (type) {
       case 'line':
         return (
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width='100%' height={300}>
             <LineChart data={data} aria-label={ariaLabel || 'Line chart'}>
-              <CartesianGrid strokeDasharray="3 3" />
+              <CartesianGrid strokeDasharray='3 3' />
               <XAxis dataKey={xAxisKey} />
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line
-                type="monotone"
-                dataKey={yAxisKey}
-                stroke={colors[0]}
-                strokeWidth={2}
-              />
+              <Line type='monotone' dataKey={yAxisKey} stroke={colors[0]} strokeWidth={2} />
             </LineChart>
           </ResponsiveContainer>
         )
 
       case 'bar':
         return (
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width='100%' height={300}>
             <BarChart data={data} aria-label={ariaLabel || 'Bar chart'}>
-              <CartesianGrid strokeDasharray="3 3" />
+              <CartesianGrid strokeDasharray='3 3' />
               <XAxis dataKey={xAxisKey} />
               <YAxis />
               <Tooltip />
@@ -85,16 +80,16 @@ export const Graph = ({
 
       case 'pie':
         return (
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width='100%' height={300}>
             <PieChart aria-label={ariaLabel || 'Pie chart'}>
               <Pie
                 data={data}
-                cx="50%"
-                cy="50%"
+                cx='50%'
+                cy='50%'
                 labelLine={false}
                 label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                 outerRadius={80}
-                fill="#8884d8"
+                fill='#8884d8'
                 dataKey={yAxisKey}
               >
                 {data.map((_entry, index) => (
@@ -115,11 +110,11 @@ export const Graph = ({
   return (
     <Box
       className={classNames('tw-bg-white tw-rounded-lg tw-shadow-md tw-p-4', className)}
-      role="img"
+      role='img'
       aria-label={ariaLabel || `${type} chart`}
     >
       {title && (
-        <Box component="h3" className="tw-mb-4 tw-text-lg tw-font-semibold">
+        <Box component='h3' className='tw-mb-4 tw-text-lg tw-font-semibold'>
           {title}
         </Box>
       )}
@@ -127,4 +122,3 @@ export const Graph = ({
     </Box>
   )
 }
-

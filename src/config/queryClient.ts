@@ -9,13 +9,12 @@ export const queryClient = new QueryClient({
       refetchOnReconnect: true,
       refetchOnMount: true,
       retry: 3,
-      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
-      structuralSharing: true
+      retryDelay: attemptIndex => Math.min(1000 * 2 ** attemptIndex, 30000),
+      structuralSharing: true,
     },
     mutations: {
       retry: 1,
-      retryDelay: 1000
-    }
-  }
+      retryDelay: 1000,
+    },
+  },
 })
-

@@ -26,7 +26,7 @@ export const useLazyLoad = <T extends HTMLElement = HTMLDivElement>(
       {
         root: options.root || null,
         rootMargin: options.rootMargin || '50px',
-        threshold: options.threshold || 0.1
+        threshold: options.threshold || 0.1,
       }
     )
 
@@ -46,7 +46,6 @@ export const useLazyComponent = <T extends HTMLElement = HTMLDivElement>(
   return useLazyLoad<T>({
     rootMargin: '100px',
     threshold: 0.1,
-    ...options
+    ...options,
   })
 }
-

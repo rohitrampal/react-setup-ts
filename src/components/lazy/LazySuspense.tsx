@@ -13,20 +13,20 @@ export const LazySuspense = ({
   children,
   fallback,
   minHeight = '400px',
-  showText = true
+  showText = true,
 }: LazySuspenseProps) => {
   const { t } = useTranslation()
 
   const defaultFallback = (
     <Box
-      className="tw-flex tw-flex-col tw-items-center tw-justify-center"
+      className='tw-flex tw-flex-col tw-items-center tw-justify-center'
       style={{ minHeight }}
-      role="status"
+      role='status'
       aria-label={t('common.loading')}
     >
-      <CircularProgress size={48} className="tw-mb-4" />
+      <CircularProgress size={48} className='tw-mb-4' />
       {showText && (
-        <Typography variant="body2" color="textSecondary">
+        <Typography variant='body2' color='textSecondary'>
           {t('common.loading')}
         </Typography>
       )}
@@ -38,7 +38,7 @@ export const LazySuspense = ({
 
 export const PageSuspense = ({ children }: { children: ReactNode }) => {
   return (
-    <LazySuspense minHeight="60vh" showText={true}>
+    <LazySuspense minHeight='60vh' showText={true}>
       {children}
     </LazySuspense>
   )
@@ -46,9 +46,8 @@ export const PageSuspense = ({ children }: { children: ReactNode }) => {
 
 export const ComponentSuspense = ({ children }: { children: ReactNode }) => {
   return (
-    <LazySuspense minHeight="200px" showText={false}>
+    <LazySuspense minHeight='200px' showText={false}>
       {children}
     </LazySuspense>
   )
 }
-

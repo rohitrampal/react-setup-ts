@@ -4,7 +4,7 @@ import {
   InputAdornment,
   FormHelperText,
   FormControl,
-  FormLabel
+  FormLabel,
 } from '@mui/material'
 import { forwardRef } from 'react'
 import { classNames } from '@/utils/classNames'
@@ -47,31 +47,31 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         required={required}
         className={classNames('tw-mb-4', className)}
       >
-        <FormLabel htmlFor={inputId} className="tw-mb-2">
+        <FormLabel htmlFor={inputId} className='tw-mb-2'>
           {label}
-          {required && <span className="tw-text-red-500 tw-ml-1">*</span>}
+          {required && <span className='tw-text-red-500 tw-ml-1'>*</span>}
         </FormLabel>
         <TextField
           ref={ref}
           id={inputId}
           label={label}
           error={error}
-          variant="outlined"
+          variant='outlined'
           InputProps={{
             startAdornment: startAdornment ? (
-              <InputAdornment position="start">{startAdornment}</InputAdornment>
+              <InputAdornment position='start'>{startAdornment}</InputAdornment>
             ) : undefined,
             endAdornment: endAdornment ? (
-              <InputAdornment position="end">{endAdornment}</InputAdornment>
+              <InputAdornment position='end'>{endAdornment}</InputAdornment>
             ) : undefined,
             'aria-label': ariaLabel || label,
             'aria-describedby': ariaDescribedBy || helperTextId,
-            'aria-required': required
+            'aria-required': required,
           }}
           {...props}
         />
         {helperText && (
-          <FormHelperText id={helperTextId} aria-live="polite">
+          <FormHelperText id={helperTextId} aria-live='polite'>
             {helperText}
           </FormHelperText>
         )}
@@ -81,4 +81,3 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 )
 
 Input.displayName = 'Input'
-

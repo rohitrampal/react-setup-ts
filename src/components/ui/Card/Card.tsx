@@ -33,8 +33,7 @@ export const Card = ({
           aria-label={title ? `${title} card` : undefined}
         />
       )}
-      <CardContent className="tw-p-6">{children}</CardContent>
+      <CardContent className='tw-p-6'>{children}</CardContent>
     </MuiCard>
   )
 }
-

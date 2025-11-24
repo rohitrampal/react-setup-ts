@@ -2,7 +2,7 @@ import {
   Alert as MuiAlert,
   AlertProps as MuiAlertProps,
   AlertTitle,
-  IconButton
+  IconButton,
 } from '@mui/material'
 import { Close as CloseIcon } from '@mui/icons-material'
 import { ReactNode } from 'react'
@@ -32,16 +32,11 @@ export const Alert = ({
       severity={severity}
       className={classNames('tw-rounded-lg tw-mb-4', className)}
       aria-label={ariaLabel || `${severity} alert`}
-      role="alert"
+      role='alert'
       action={
         dismissible && onDismiss ? (
-          <IconButton
-            aria-label="Dismiss alert"
-            color="inherit"
-            size="small"
-            onClick={onDismiss}
-          >
-            <CloseIcon fontSize="inherit" />
+          <IconButton aria-label='Dismiss alert' color='inherit' size='small' onClick={onDismiss}>
+            <CloseIcon fontSize='inherit' />
           </IconButton>
         ) : undefined
       }
@@ -52,4 +47,3 @@ export const Alert = ({
     </MuiAlert>
   )
 }
-

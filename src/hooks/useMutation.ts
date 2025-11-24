@@ -2,12 +2,13 @@ import {
   useMutation,
   UseMutationOptions,
   UseMutationResult,
-  useQueryClient
+  useQueryClient,
 } from '@tanstack/react-query'
 import { apiClient } from '@/services/api/client'
 import { ApiResponse } from '@/services/api/types'
 
-export interface UseApiMutationOptions<TData, TVariables> extends Omit<UseMutationOptions<ApiResponse<TData>, Error, TVariables>, 'mutationFn'> {
+export interface UseApiMutationOptions<TData, TVariables>
+  extends Omit<UseMutationOptions<ApiResponse<TData>, Error, TVariables>, 'mutationFn'> {
   endpoint: string
   method?: 'POST' | 'PUT' | 'PATCH' | 'DELETE'
   invalidateQueries?: string[]
@@ -35,29 +36,29 @@ export function useApiMutation<TData = unknown, TVariables = unknown>(
         case 'POST':
           return await apiClient.post<TData>(endpoint, variables, {
             skipCache: true,
-            skipDeduplication: true
+            skipDeduplication: true,
           })
         case 'PUT':
           return await apiClient.put<TData>(endpoint, variables, {
             skipCache: true,
-            skipDeduplication: true
+            skipDeduplication: true,
           })
         case 'PATCH':
           return await apiClient.patch<TData>(endpoint, variables, {
             skipCache: true,
-            skipDeduplication: true
+            skipDeduplication: true,
           })
         case 'DELETE':
           return await apiClient.delete<TData>(endpoint, {
             skipCache: true,
-            skipDeduplication: true
+            skipDeduplication: true,
           })
         default:
           throw new Error(`Unsupported method: ${method}`)
       }
     },
     onMutate: optimisticUpdate
-      ? async (variables) => {
+      ? async variables => {
           if (optimisticUpdate) {
             await queryClient.cancelQueries({ queryKey: optimisticUpdate.queryKey })
             const previousData = queryClient.getQueryData(optimisticUpdate.queryKey)
@@ -71,17 +72,21 @@ export function useApiMutation<TData = unknown, TVariables = unknown>(
       : undefined,
     onError: optimisticUpdate
       ? (_error, _variables, context) => {
-          if (context && typeof context === 'object' && 'previousData' in context && context.previousData) {
+          if (
+            context &&
+            typeof context === 'object' &&
+            'previousData' in context &&
+            context.previousData
+          ) {
             queryClient.setQueryData(optimisticUpdate.queryKey, context.previousData)
           }
         }
       : undefined,
     onSettled: () => {
-      invalidateQueries.forEach((queryKey) => {
+      invalidateQueries.forEach(queryKey => {
         queryClient.invalidateQueries({ queryKey: [queryKey] })
       })
     },
-    ...mutationOptions
+    ...mutationOptions,
   })
 }
-

@@ -25,4 +25,3 @@ export interface User {
   role?: UserRole
   avatar?: string
 }
-

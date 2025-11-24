@@ -20,7 +20,7 @@ export const LazyImage = ({
   height,
   placeholder,
   onLoad,
-  onError
+  onError,
 }: LazyImageProps) => {
   const [isLoaded, setIsLoaded] = useState(false)
   const [isInView, setIsInView] = useState(false)
@@ -29,8 +29,8 @@ export const LazyImage = ({
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
+      entries => {
+        entries.forEach(entry => {
           if (entry.isIntersecting) {
             setIsInView(true)
             observer.disconnect()
@@ -38,7 +38,7 @@ export const LazyImage = ({
         })
       },
       {
-        rootMargin: '50px'
+        rootMargin: '50px',
       }
     )
 
@@ -69,18 +69,18 @@ export const LazyImage = ({
     >
       {!isLoaded && !hasError && (
         <Skeleton
-          variant="rectangular"
+          variant='rectangular'
           width={width || '100%'}
           height={height || '100%'}
-          animation="wave"
+          animation='wave'
         />
       )}
       {hasError && (
         <Box
-          className="tw-flex tw-items-center tw-justify-center tw-bg-gray-200"
+          className='tw-flex tw-items-center tw-justify-center tw-bg-gray-200'
           style={{ width, height }}
         >
-          <Typography variant="caption" color="textSecondary">
+          <Typography variant='caption' color='textSecondary'>
             {alt}
           </Typography>
         </Box>
@@ -95,12 +95,11 @@ export const LazyImage = ({
             display: isLoaded ? 'block' : 'none',
             width: '100%',
             height: '100%',
-            objectFit: 'cover'
+            objectFit: 'cover',
           }}
-          loading="lazy"
+          loading='lazy'
         />
       )}
     </Box>
   )
 }
-

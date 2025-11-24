@@ -4,7 +4,7 @@ export class SecurityUtils {
   static sanitizeHtml(dirty: string): string {
     return DOMPurify.sanitize(dirty, {
       ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'a', 'p', 'br'],
-      ALLOWED_ATTR: ['href', 'title']
+      ALLOWED_ATTR: ['href', 'title'],
     })
   }
 
@@ -14,9 +14,9 @@ export class SecurityUtils {
       '<': '&lt;',
       '>': '&gt;',
       '"': '&quot;',
-      "'": '&#039;'
+      "'": '&#039;',
     }
-    return text.replace(/[&<>"']/g, (m) => map[m])
+    return text.replace(/[&<>"']/g, m => map[m])
   }
 
   static sanitizeInput(input: string): string {
@@ -26,7 +26,7 @@ export class SecurityUtils {
   static generateCSRFToken(): string {
     const array = new Uint8Array(32)
     crypto.getRandomValues(array)
-    return Array.from(array, (byte) => byte.toString(16).padStart(2, '0')).join('')
+    return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('')
   }
 
   static validateUrl(url: string): boolean {
@@ -70,4 +70,3 @@ export class SecurityUtils {
     return { allowed: true, remaining: maxRequests - data.count }
   }
 }
-

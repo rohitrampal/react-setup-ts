@@ -17,16 +17,16 @@ export const Header = () => {
   }
 
   return (
-    <AppBar position="static" className="tw-shadow-md">
-      <Toolbar className="tw-justify-between">
+    <AppBar position='static' className='tw-shadow-md'>
+      <Toolbar className='tw-justify-between'>
         <Typography
-          variant="h6"
-          component="div"
-          className="tw-cursor-pointer"
+          variant='h6'
+          component='div'
+          className='tw-cursor-pointer'
           onClick={() => navigate('/dashboard')}
-          role="link"
+          role='link'
           tabIndex={0}
-          onKeyDown={(e) => {
+          onKeyDown={e => {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault()
               navigate('/dashboard')
@@ -37,29 +37,25 @@ export const Header = () => {
           {t('common.appName')}
         </Typography>
 
-        <Box className="tw-flex tw-items-center tw-gap-2">
+        <Box className='tw-flex tw-items-center tw-gap-2'>
           {user && (
             <>
               <Button
-                color="inherit"
+                color='inherit'
                 startIcon={<Person />}
                 onClick={() => navigate('/profile')}
-                aria-label="Navigate to profile"
+                aria-label='Navigate to profile'
               >
                 {user.name}
               </Button>
-              <IconButton
-                color="inherit"
-                onClick={handleLogout}
-                aria-label={t('auth.logout')}
-              >
+              <IconButton color='inherit' onClick={handleLogout} aria-label={t('auth.logout')}>
                 <Logout />
               </IconButton>
             </>
           )}
           <LanguageSwitcher />
           <IconButton
-            color="inherit"
+            color='inherit'
             onClick={toggleTheme}
             aria-label={`Switch to ${mode === 'light' ? 'dark' : 'light'} mode`}
           >
@@ -70,4 +66,3 @@ export const Header = () => {
     </AppBar>
   )
 }
-

@@ -1,7 +1,7 @@
-import { lazy, Suspense } from 'react'
+import { lazy } from 'react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Table, Column } from '@/components/ui'
+import { Column } from '@/components/ui'
 import { Box, Typography, TextField, InputAdornment, CircularProgress } from '@mui/material'
 import { Search } from '@mui/icons-material'
 import { useListItems } from '../hooks/useListQuery'
@@ -12,14 +12,13 @@ import type { ListItem } from '../hooks/useListQuery'
 
 // Lazy load Table component
 const LazyTable = lazy(() =>
-  import('@/components/ui/Table').then((module) => ({ default: module.Table }))
+  import('@/components/ui/Table').then(module => ({ default: module.Table }))
 )
 
 export const DataList = () => {
   const { t } = useTranslation()
   const [searchTerm, setSearchTerm] = useState('')
   const { data, isLoading, isError, error, refetch } = useListItems(searchTerm || undefined)
-
 
   const columns: Column<ListItem>[] = [
     { id: 'name', label: t('list.name'), minWidth: 150 },
@@ -29,7 +28,7 @@ export const DataList = () => {
       id: 'status',
       label: t('list.status'),
       minWidth: 100,
-      format: (value) => {
+      format: value => {
         const statusValue = String(value)
         const isActive = statusValue === 'Active'
         return (
@@ -41,58 +40,55 @@ export const DataList = () => {
             {isActive ? t('list.active') : t('list.inactive')}
           </span>
         )
-      }
-    }
+      },
+    },
   ]
 
   if (isLoading) {
     return (
-      <Box className="tw-flex tw-justify-center tw-items-center tw-py-8">
+      <Box className='tw-flex tw-justify-center tw-items-center tw-py-8'>
         <CircularProgress aria-label={t('common.loading')} />
       </Box>
     )
   }
 
   if (isError) {
-    return (
-      <QueryErrorFallback error={error as Error} refetch={refetch} isLoading={isLoading} />
-    )
+    return <QueryErrorFallback error={error as Error} refetch={refetch} isLoading={isLoading} />
   }
 
   return (
-    <ModuleErrorBoundary moduleName="List">
+    <ModuleErrorBoundary moduleName='List'>
       <Box aria-label={t('list.title')}>
-      <Box className="tw-mb-4 tw-flex tw-items-center tw-justify-between">
-        <Typography variant="h5" component="h2">
-          {t('list.users')}
-        </Typography>
-        <TextField
-          placeholder={t('list.searchPlaceholder')}
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          size="small"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <Search />
-              </InputAdornment>
-            )
-          }}
-          aria-label={t('common.search')}
-        />
-      </Box>
+        <Box className='tw-mb-4 tw-flex tw-items-center tw-justify-between'>
+          <Typography variant='h5' component='h2'>
+            {t('list.users')}
+          </Typography>
+          <TextField
+            placeholder={t('list.searchPlaceholder')}
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+            size='small'
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <Search />
+                </InputAdornment>
+              ),
+            }}
+            aria-label={t('common.search')}
+          />
+        </Box>
 
-      <ComponentSuspense>
-        <LazyTable
-          columns={columns as Column<unknown>[]}
-          rows={(data || []) as unknown as Record<string, unknown>[]}
-          getRowId={(row: Record<string, unknown>) => (row.id as string) || ''}
-          stickyHeader
-          aria-label={t('list.users')}
-        />
-      </ComponentSuspense>
+        <ComponentSuspense>
+          <LazyTable
+            columns={columns as Column<unknown>[]}
+            rows={(data || []) as unknown as Record<string, unknown>[]}
+            getRowId={(row: Record<string, unknown>) => (row.id as string) || ''}
+            stickyHeader
+            aria-label={t('list.users')}
+          />
+        </ComponentSuspense>
       </Box>
     </ModuleErrorBoundary>
   )
 }
-

@@ -10,7 +10,10 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier --write \"src/**/*.{ts,tsx,json,css,scss}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,json,css,scss}\"",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "pre-commit": "bash .pre-commit.sh",
+    "check-all": "npm run lint && npm run type-check && npm run format:check",
+    "verify": "npm run check-all && npm run build"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -44,6 +47,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.16",
     "eslint": "^8.54.0",
+    "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.4",
     "postcss": "^8.4.32",

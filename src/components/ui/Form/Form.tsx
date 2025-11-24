@@ -19,14 +19,17 @@ export function Form<T extends FieldValues>({
   validationSchema,
   defaultValues,
   className,
-  'aria-label': ariaLabel
+  'aria-label': ariaLabel,
 }: FormProps<T>) {
   const methods = useForm<T>({
-    resolver: validationSchema ? (yupResolver(validationSchema) as unknown as Resolver<T>) : undefined,
-    defaultValues: defaultValues as any
+    resolver: validationSchema
+      ? (yupResolver(validationSchema) as unknown as Resolver<T>)
+      : undefined,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    defaultValues: defaultValues as any,
   })
 
-  const handleSubmit = methods.handleSubmit(async (data) => {
+  const handleSubmit = methods.handleSubmit(async data => {
     await onSubmit(data as T)
   })
 
@@ -43,4 +46,3 @@ export function Form<T extends FieldValues>({
     </FormProvider>
   )
 }
-

@@ -11,20 +11,14 @@ export const Layout = ({ children }: LayoutProps) => {
   const { isAuthenticated } = useAuth()
 
   return (
-    <Box className="tw-min-h-screen tw-flex tw-flex-col">
+    <Box className='tw-min-h-screen tw-flex tw-flex-col'>
       <Header />
-      <Box className="tw-flex tw-flex-1">
+      <Box className='tw-flex tw-flex-1'>
         {isAuthenticated && <Navigation />}
-        <Box
-          component="main"
-          className="tw-flex-1 tw-p-6"
-          role="main"
-          aria-label="Main content"
-        >
+        <Box component='main' className='tw-flex-1 tw-p-6' role='main' aria-label='Main content'>
           {children}
         </Box>
       </Box>
     </Box>
   )
 }
-

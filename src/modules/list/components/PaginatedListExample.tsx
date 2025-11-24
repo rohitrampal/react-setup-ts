@@ -18,22 +18,22 @@ export const PaginatedListExample = () => {
     nextPage,
     previousPage,
     hasNextPage,
-    hasPreviousPage
+    hasPreviousPage,
   } = usePagination<ListItem>({
     endpoint: '/list/items',
-    pageSize: 10
+    pageSize: 10,
   })
 
   const columns: Column<ListItem>[] = [
     { id: 'name', label: t('list.name'), minWidth: 150 },
     { id: 'email', label: t('list.email'), minWidth: 200 },
     { id: 'role', label: t('list.role'), minWidth: 100 },
-    { id: 'status', label: t('list.status'), minWidth: 100 }
+    { id: 'status', label: t('list.status'), minWidth: 100 },
   ]
 
   if (isLoading) {
     return (
-      <Box className="tw-flex tw-justify-center tw-items-center tw-py-8">
+      <Box className='tw-flex tw-justify-center tw-items-center tw-py-8'>
         <CircularProgress aria-label={t('common.loading')} />
       </Box>
     )
@@ -45,7 +45,7 @@ export const PaginatedListExample = () => {
 
   return (
     <Box>
-      <Typography variant="h5" component="h2" className="tw-mb-4">
+      <Typography variant='h5' component='h2' className='tw-mb-4'>
         {t('list.users')} (Paginated)
       </Typography>
 
@@ -57,19 +57,19 @@ export const PaginatedListExample = () => {
         aria-label={t('list.users')}
       />
 
-      <Box className="tw-mt-4 tw-flex tw-items-center tw-justify-between">
-        <Typography variant="body2">
+      <Box className='tw-mt-4 tw-flex tw-items-center tw-justify-between'>
+        <Typography variant='body2'>
           {t('common.showing')} {(page - 1) * pageSize + 1} - {Math.min(page * pageSize, total)} of{' '}
           {total}
         </Typography>
 
-        <Box className="tw-flex tw-gap-2 tw-items-center">
+        <Box className='tw-flex tw-gap-2 tw-items-center'>
           <Button
             onClick={previousPage}
             disabled={!hasPreviousPage}
-            variant="outlined"
-            size="small"
-            aria-label="Previous page"
+            variant='outlined'
+            size='small'
+            aria-label='Previous page'
           >
             {t('common.previous')}
           </Button>
@@ -78,17 +78,17 @@ export const PaginatedListExample = () => {
             count={totalPages}
             page={page}
             onChange={(_e, newPage) => setPage(newPage)}
-            color="primary"
-            size="small"
-            aria-label="Pagination"
+            color='primary'
+            size='small'
+            aria-label='Pagination'
           />
 
           <Button
             onClick={nextPage}
             disabled={!hasNextPage}
-            variant="outlined"
-            size="small"
-            aria-label="Next page"
+            variant='outlined'
+            size='small'
+            aria-label='Next page'
           >
             {t('common.next')}
           </Button>
@@ -97,4 +97,3 @@ export const PaginatedListExample = () => {
     </Box>
   )
 }
-

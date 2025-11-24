@@ -3,7 +3,7 @@ type ClassValue = string | number | boolean | undefined | null | Record<string, 
 export function classNames(...classes: ClassValue[]): string {
   return classes
     .filter(Boolean)
-    .map((cls) => {
+    .map(cls => {
       if (typeof cls === 'string' || typeof cls === 'number') {
         return cls
       }
@@ -18,4 +18,3 @@ export function classNames(...classes: ClassValue[]): string {
     .filter(Boolean)
     .join(' ')
 }
-

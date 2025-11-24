@@ -18,20 +18,20 @@ export const Navigation = () => {
   const navItems: NavItem[] = [
     { labelKey: 'navigation.dashboard', path: '/dashboard', icon: <Dashboard /> },
     { labelKey: 'navigation.list', path: '/list', icon: <ListIcon /> },
-    { labelKey: 'navigation.profile', path: '/profile', icon: <Person /> }
+    { labelKey: 'navigation.profile', path: '/profile', icon: <Person /> },
   ]
 
   return (
     <Drawer
-      variant="permanent"
-      className="tw-w-64"
+      variant='permanent'
+      className='tw-w-64'
       PaperProps={{
-        className: 'tw-w-64 tw-relative tw-z-0'
+        className: 'tw-w-64 tw-relative tw-z-0',
       }}
       aria-label={t('navigation.dashboard')}
     >
-      <List className="tw-mt-16" role="navigation" aria-label={t('navigation.dashboard')}>
-        {navItems.map((item) => {
+      <List className='tw-mt-16' role='navigation' aria-label={t('navigation.dashboard')}>
+        {navItems.map(item => {
           const isActive = location.pathname === item.path
           return (
             <ListItem key={item.path} disablePadding>
@@ -51,4 +51,3 @@ export const Navigation = () => {
     </Drawer>
   )
 }
-

@@ -1,7 +1,4 @@
-import {
-  useInfiniteQuery,
-  InfiniteData
-} from '@tanstack/react-query'
+import { useInfiniteQuery, InfiniteData } from '@tanstack/react-query'
 import { apiClient } from '@/services/api/client'
 import { ApiResponse } from '@/services/api/types'
 
@@ -15,7 +12,10 @@ export interface UseInfiniteScrollOptions<T> {
   endpoint: string
   pageSize?: number
   enabled?: boolean
-  getNextPageParam?: (lastPage: ApiResponse<InfiniteResponse<T>>, allPages: ApiResponse<InfiniteResponse<T>>[]) => number | undefined
+  getNextPageParam?: (
+    lastPage: ApiResponse<InfiniteResponse<T>>,
+    allPages: ApiResponse<InfiniteResponse<T>>[]
+  ) => number | undefined
 }
 
 export interface UseInfiniteScrollReturn<T> {
@@ -37,10 +37,10 @@ export function useInfiniteScroll<T = unknown>(
     endpoint,
     pageSize = 10,
     enabled = true,
-    getNextPageParam = (lastPage) => {
+    getNextPageParam = lastPage => {
       const data = lastPage.data
       return data?.hasMore ? data.nextPage : undefined
-    }
+    },
   } = options
 
   const {
@@ -51,23 +51,23 @@ export function useInfiniteScroll<T = unknown>(
     isLoading,
     isError,
     error,
-    refetch
+    refetch,
   } = useInfiniteQuery<ApiResponse<InfiniteResponse<T>>>({
     queryKey: [endpoint, 'infinite', pageSize],
     queryFn: async ({ pageParam = 1 }) => {
       return await apiClient.get<InfiniteResponse<T>>(endpoint, {
         params: { page: pageParam, pageSize },
         skipCache: false,
-        ttl: 30000
+        ttl: 30000,
       })
     },
     getNextPageParam,
     enabled,
     staleTime: 30000,
-    initialPageParam: 1
+    initialPageParam: 1,
   })
 
-  const allItems = data?.pages.flatMap((page) => page.data?.data || []) || []
+  const allItems = data?.pages.flatMap(page => page.data?.data || []) || []
 
   return {
     data,
@@ -78,7 +78,6 @@ export function useInfiniteScroll<T = unknown>(
     isError,
     error: error as Error | null,
     refetch,
-    allItems
+    allItems,
   }
 }
-

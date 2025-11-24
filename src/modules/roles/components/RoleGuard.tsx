@@ -19,15 +19,14 @@ export const RoleGuard = ({ children, allowedRoles, fallback }: RoleGuardProps) 
   }
 
   if (!user) {
-    return <Navigate to="/login" replace />
+    return <Navigate to='/login' replace />
   }
 
   const userRole = (user as { role?: UserRole })?.role || 'customer'
 
   if (!allowedRoles.includes(userRole)) {
-    return fallback ? <>{fallback}</> : <Navigate to="/dashboard" replace />
+    return fallback ? <>{fallback}</> : <Navigate to='/dashboard' replace />
   }
 
   return <>{children}</>
 }
-

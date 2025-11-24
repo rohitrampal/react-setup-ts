@@ -8,7 +8,7 @@ interface RateLimitConfig {
 class RateLimiter {
   private config: RateLimitConfig = {
     maxRequests: 100,
-    windowMs: 60000
+    windowMs: 60000,
   }
 
   setConfig(config: Partial<RateLimitConfig>): void {
@@ -17,11 +17,7 @@ class RateLimiter {
 
   async checkLimit(endpoint: string): Promise<boolean> {
     const key = `api_rate_limit_${endpoint}`
-    const result = SecurityUtils.rateLimitCheck(
-      key,
-      this.config.maxRequests,
-      this.config.windowMs
-    )
+    const result = SecurityUtils.rateLimitCheck(key, this.config.maxRequests, this.config.windowMs)
 
     if (!result.allowed) {
       throw new Error('Rate limit exceeded. Please try again later.')
@@ -32,4 +28,3 @@ class RateLimiter {
 }
 
 export const rateLimiter = new RateLimiter()
-

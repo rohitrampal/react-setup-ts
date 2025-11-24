@@ -2,7 +2,7 @@ import axios, {
   AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
-  InternalAxiosRequestConfig
+  InternalAxiosRequestConfig,
 } from 'axios'
 import { env } from '@/config/env'
 import { CacheManager } from '@/utils/cache'
@@ -21,8 +21,8 @@ class ApiClient {
       baseURL: env.apiUrl,
       timeout: 30000,
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     })
 
     this.setupInterceptors()
@@ -70,7 +70,9 @@ class ApiClient {
           return Promise.reject(this.formatError(error))
         }
 
-        const originalRequest = error.config as (InternalAxiosRequestConfig & RequestConfig) | undefined
+        const originalRequest = error.config as
+          | (InternalAxiosRequestConfig & RequestConfig)
+          | undefined
 
         if (error.response?.status === 401 && originalRequest && !originalRequest._retry) {
           originalRequest._retry = true
@@ -102,10 +104,9 @@ class ApiClient {
           throw new Error('No refresh token available')
         }
 
-        const response = await axios.post<TokenRefreshResponse>(
-          `${env.apiUrl}/auth/refresh`,
-          { refreshToken }
-        )
+        const response = await axios.post<TokenRefreshResponse>(`${env.apiUrl}/auth/refresh`, {
+          refreshToken,
+        })
 
         const { accessToken, refreshToken: newRefreshToken } = response.data
 
@@ -128,13 +129,13 @@ class ApiClient {
       return {
         message: error.response?.data?.message || error.message || 'An error occurred',
         status: error.response?.status || 500,
-        errors: error.response?.data?.errors
+        errors: error.response?.data?.errors,
       }
     }
 
     return {
       message: error instanceof Error ? error.message : 'An unknown error occurred',
-      status: 500
+      status: 500,
     }
   }
 
@@ -161,10 +162,7 @@ class ApiClient {
     return `api_cache_${method}_${url}_${JSON.stringify(params || {})}`
   }
 
-  async get<T>(
-    url: string,
-    config?: RequestConfig & AxiosRequestConfig
-  ): Promise<ApiResponse<T>> {
+  async get<T>(url: string, config?: RequestConfig & AxiosRequestConfig): Promise<ApiResponse<T>> {
     const cacheKey = this.generateCacheKey('GET', url, config?.params)
     const ttl = config?.ttl || 300000
 
@@ -176,7 +174,9 @@ class ApiClient {
     await rateLimiter.checkLimit(url)
 
     const requestFn = () =>
-      this.client.get<ApiResponse<T>>(url, config).then((res: AxiosResponse<ApiResponse<T>>) => res.data)
+      this.client
+        .get<ApiResponse<T>>(url, config)
+        .then((res: AxiosResponse<ApiResponse<T>>) => res.data)
 
     const key = requestDeduplication.generateKey('GET', url, config?.params)
     const data = config?.skipDeduplication
@@ -198,7 +198,9 @@ class ApiClient {
     await rateLimiter.checkLimit(url)
 
     const requestFn = () =>
-      this.client.post<ApiResponse<T>>(url, data, config).then((res: AxiosResponse<ApiResponse<T>>) => res.data)
+      this.client
+        .post<ApiResponse<T>>(url, data, config)
+        .then((res: AxiosResponse<ApiResponse<T>>) => res.data)
 
     const key = requestDeduplication.generateKey('POST', url, data)
     return config?.skipDeduplication
@@ -214,7 +216,9 @@ class ApiClient {
     await rateLimiter.checkLimit(url)
 
     const requestFn = () =>
-      this.client.put<ApiResponse<T>>(url, data, config).then((res: AxiosResponse<ApiResponse<T>>) => res.data)
+      this.client
+        .put<ApiResponse<T>>(url, data, config)
+        .then((res: AxiosResponse<ApiResponse<T>>) => res.data)
 
     const key = requestDeduplication.generateKey('PUT', url, data)
     return config?.skipDeduplication
@@ -230,7 +234,9 @@ class ApiClient {
     await rateLimiter.checkLimit(url)
 
     const requestFn = () =>
-      this.client.patch<ApiResponse<T>>(url, data, config).then((res: AxiosResponse<ApiResponse<T>>) => res.data)
+      this.client
+        .patch<ApiResponse<T>>(url, data, config)
+        .then((res: AxiosResponse<ApiResponse<T>>) => res.data)
 
     const key = requestDeduplication.generateKey('PATCH', url, data)
     return config?.skipDeduplication
@@ -244,9 +250,10 @@ class ApiClient {
   ): Promise<ApiResponse<T>> {
     await rateLimiter.checkLimit(url)
 
-    return this.client.delete<ApiResponse<T>>(url, config).then((res: AxiosResponse<ApiResponse<T>>) => res.data)
+    return this.client
+      .delete<ApiResponse<T>>(url, config)
+      .then((res: AxiosResponse<ApiResponse<T>>) => res.data)
   }
 }
 
 export const apiClient = new ApiClient()
-

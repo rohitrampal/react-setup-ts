@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 const languages = [
   { code: 'en', label: 'English', nativeLabel: 'English' },
   { code: 'hi', label: 'Hindi', nativeLabel: 'हिंदी' },
-  { code: 'pa', label: 'Punjabi', nativeLabel: 'ਪੰਜਾਬੀ' }
+  { code: 'pa', label: 'Punjabi', nativeLabel: 'ਪੰਜਾਬੀ' },
 ]
 
 export const LanguageSwitcher = () => {
@@ -26,16 +26,14 @@ export const LanguageSwitcher = () => {
     handleClose()
   }
 
-  const currentLanguage = languages.find((lang) => lang.code === i18n.language) || languages[0]
-
   return (
     <>
       <Tooltip title={t('language.switchLanguage')}>
         <IconButton
-          color="inherit"
+          color='inherit'
           onClick={handleClick}
           aria-label={t('language.switchLanguage')}
-          aria-haspopup="true"
+          aria-haspopup='true'
           aria-expanded={Boolean(anchorEl)}
         >
           <Language />
@@ -46,10 +44,10 @@ export const LanguageSwitcher = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
         MenuListProps={{
-          'aria-labelledby': 'language-menu-button'
+          'aria-labelledby': 'language-menu-button',
         }}
       >
-        {languages.map((language) => (
+        {languages.map(language => (
           <MenuItem
             key={language.code}
             onClick={() => handleLanguageChange(language.code)}
@@ -63,4 +61,3 @@ export const LanguageSwitcher = () => {
     </>
   )
 }
-

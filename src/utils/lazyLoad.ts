@@ -29,4 +29,3 @@ export const preloadRoute = (routePath: string): void => {
     })
   }
 }
-

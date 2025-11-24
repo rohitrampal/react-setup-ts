@@ -7,8 +7,8 @@ import type { GraphData } from '@/components/ui'
 
 // Lazy load DashboardStats component
 const DashboardStats = lazy(() =>
-  import('../components/DashboardStats').then((module) => ({
-    default: module.DashboardStats
+  import('../components/DashboardStats').then(module => ({
+    default: module.DashboardStats,
   }))
 )
 
@@ -20,12 +20,12 @@ export const DashboardPage = () => {
     { name: 'Mar', value: 2000 },
     { name: 'Apr', value: 2780 },
     { name: 'May', value: 1890 },
-    { name: 'Jun', value: 2390 }
+    { name: 'Jun', value: 2390 },
   ]
 
   return (
-    <Container maxWidth="xl" className="tw-py-8" aria-label={t('dashboard.title')}>
-      <Typography variant="h4" component="h1" className="tw-mb-6">
+    <Container maxWidth='xl' className='tw-py-8' aria-label={t('dashboard.title')}>
+      <Typography variant='h4' component='h1' className='tw-mb-6'>
         {t('dashboard.title')}
       </Typography>
 
@@ -33,15 +33,15 @@ export const DashboardPage = () => {
         <DashboardStats />
       </ComponentSuspense>
 
-      <Box className="tw-grid tw-grid-cols-1 lg:tw-grid-cols-2 tw-gap-6">
+      <Box className='tw-grid tw-grid-cols-1 lg:tw-grid-cols-2 tw-gap-6'>
         <LazyGraph
-          type="line"
+          type='line'
           data={chartData}
           title={t('dashboard.revenueOverview')}
           aria-label={t('dashboard.revenueOverview')}
         />
         <LazyGraph
-          type="bar"
+          type='bar'
           data={chartData}
           title={t('dashboard.monthlySales')}
           aria-label={t('dashboard.monthlySales')}
@@ -50,4 +50,3 @@ export const DashboardPage = () => {
     </Container>
   )
 }
-

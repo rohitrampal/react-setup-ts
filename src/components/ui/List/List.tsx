@@ -5,7 +5,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListProps as MuiListProps,
-  Divider
+  Divider,
 } from '@mui/material'
 import { ReactNode } from 'react'
 import { classNames } from '@/utils/classNames'
@@ -40,7 +40,7 @@ export const List = ({
       dense={dense}
       className={classNames('tw-bg-white tw-rounded-lg tw-shadow-md', className)}
       aria-label={ariaLabel || 'List'}
-      role="list"
+      role='list'
       {...props}
     >
       {items.map((item, index) => (
@@ -68,4 +68,3 @@ export const List = ({
     </MuiList>
   )
 }
-

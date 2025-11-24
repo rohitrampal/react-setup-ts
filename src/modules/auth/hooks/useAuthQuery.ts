@@ -5,7 +5,7 @@ import type { LoginCredentials, RegisterData, AuthResponse, User } from '../type
 const AUTH_KEYS = {
   currentUser: ['auth', 'currentUser'] as const,
   login: ['auth', 'login'] as const,
-  register: ['auth', 'register'] as const
+  register: ['auth', 'register'] as const,
 }
 
 export const useCurrentUser = () => {
@@ -13,13 +13,13 @@ export const useCurrentUser = () => {
     queryKey: AUTH_KEYS.currentUser,
     queryFn: async () => {
       const response = await apiClient.get<User>('/auth/me', {
-        skipCache: true
+        skipCache: true,
       })
       return response.data
     },
     enabled: !!localStorage.getItem('access_token'),
     staleTime: 5 * 60 * 1000,
-    retry: 1
+    retry: 1,
   })
 }
 
@@ -28,19 +28,19 @@ export const useLogin = () => {
 
   return useMutation({
     mutationFn: async (credentials: LoginCredentials) => {
-      const response = await apiClient.post<AuthResponse>(
-        '/auth/login',
-        credentials,
-        { skipAuth: true, skipCache: true, skipDeduplication: true }
-      )
+      const response = await apiClient.post<AuthResponse>('/auth/login', credentials, {
+        skipAuth: true,
+        skipCache: true,
+        skipDeduplication: true,
+      })
       localStorage.setItem('access_token', response.data.accessToken)
       localStorage.setItem('refresh_token', response.data.refreshToken)
       return response.data
     },
-    onSuccess: (data) => {
+    onSuccess: data => {
       queryClient.setQueryData(AUTH_KEYS.currentUser, data.user)
       queryClient.invalidateQueries({ queryKey: AUTH_KEYS.currentUser })
-    }
+    },
   })
 }
 
@@ -49,19 +49,19 @@ export const useRegister = () => {
 
   return useMutation({
     mutationFn: async (data: RegisterData) => {
-      const response = await apiClient.post<AuthResponse>(
-        '/auth/register',
-        data,
-        { skipAuth: true, skipCache: true, skipDeduplication: true }
-      )
+      const response = await apiClient.post<AuthResponse>('/auth/register', data, {
+        skipAuth: true,
+        skipCache: true,
+        skipDeduplication: true,
+      })
       localStorage.setItem('access_token', response.data.accessToken)
       localStorage.setItem('refresh_token', response.data.refreshToken)
       return response.data
     },
-    onSuccess: (data) => {
+    onSuccess: data => {
       queryClient.setQueryData(AUTH_KEYS.currentUser, data.user)
       queryClient.invalidateQueries({ queryKey: AUTH_KEYS.currentUser })
-    }
+    },
   })
 }
 
@@ -77,7 +77,6 @@ export const useLogout = () => {
     onSuccess: () => {
       queryClient.removeQueries({ queryKey: AUTH_KEYS.currentUser })
       queryClient.clear()
-    }
+    },
   })
 }
-

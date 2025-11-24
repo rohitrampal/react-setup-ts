@@ -19,13 +19,12 @@ export function useApiQuery<T = unknown>(
     queryFn: async () => {
       return await apiClient.get<T>(endpoint, {
         skipCache: true,
-        skipDeduplication: false
+        skipDeduplication: false,
       })
     },
     enabled,
     staleTime,
     gcTime,
-    ...queryOptions
+    ...queryOptions,
   })
 }
-

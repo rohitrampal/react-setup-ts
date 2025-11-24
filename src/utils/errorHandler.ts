@@ -19,7 +19,7 @@ class ErrorHandler {
       componentStack: errorInfo?.componentStack,
       timestamp: new Date(),
       userAgent: navigator.userAgent,
-      url: window.location.href
+      url: window.location.href,
     }
 
     this.errors.push(errorData)
@@ -36,11 +36,7 @@ class ErrorHandler {
   }
 
   private shouldReportToServer(error: Error): boolean {
-    const isUndefinedError = error.message?.includes('undefined') ||
-                            error.message?.includes('Cannot read')
-
-    const isNetworkError = error.message?.includes('Network') ||
-                          error.message?.includes('fetch')
+    const isNetworkError = error.message?.includes('Network') || error.message?.includes('fetch')
 
     return !isNetworkError
   }
@@ -51,9 +47,9 @@ class ErrorHandler {
         await fetch('/api/errors', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
-          body: JSON.stringify(errorData)
+          body: JSON.stringify(errorData),
         })
       }
     } catch (err) {
@@ -96,17 +92,10 @@ class ErrorHandler {
 
 export const errorHandler = new ErrorHandler()
 
-window.addEventListener('error', (event) => {
-  errorHandler.logError(
-    new Error(event.message),
-    { componentStack: event.filename }
-  )
+window.addEventListener('error', event => {
+  errorHandler.logError(new Error(event.message), { componentStack: event.filename })
 })
 
-window.addEventListener('unhandledrejection', (event) => {
-  errorHandler.logError(
-    new Error(event.reason?.message || 'Unhandled promise rejection'),
-    {}
-  )
+window.addEventListener('unhandledrejection', event => {
+  errorHandler.logError(new Error(event.reason?.message || 'Unhandled promise rejection'), {})
 })
-

@@ -17,7 +17,7 @@ export const Calendar = ({
   onChange,
   minDate,
   maxDate,
-  'aria-label': ariaLabel
+  'aria-label': ariaLabel,
 }: CalendarProps) => {
   const [currentMonth, setCurrentMonth] = useState(value)
 
@@ -43,51 +43,44 @@ export const Calendar = ({
 
   return (
     <Box
-      className="tw-bg-white tw-rounded-lg tw-shadow-md tw-p-4"
+      className='tw-bg-white tw-rounded-lg tw-shadow-md tw-p-4'
       aria-label={ariaLabel || 'Calendar'}
-      role="application"
+      role='application'
     >
-      <Box className="tw-flex tw-items-center tw-justify-between tw-mb-4">
-        <IconButton
-          onClick={handlePreviousMonth}
-          aria-label="Previous month"
-          size="small"
-        >
+      <Box className='tw-flex tw-items-center tw-justify-between tw-mb-4'>
+        <IconButton onClick={handlePreviousMonth} aria-label='Previous month' size='small'>
           <ChevronLeft />
         </IconButton>
-        <Typography variant="h6" component="h2">
+        <Typography variant='h6' component='h2'>
           {format(currentMonth, 'MMMM yyyy')}
         </Typography>
-        <IconButton
-          onClick={handleNextMonth}
-          aria-label="Next month"
-          size="small"
-        >
+        <IconButton onClick={handleNextMonth} aria-label='Next month' size='small'>
           <ChevronRight />
         </IconButton>
       </Box>
 
-      <Box className="tw-grid tw-grid-cols-7 tw-gap-1 tw-mb-2">
-        {weekDays.map((day) => (
+      <Box className='tw-grid tw-grid-cols-7 tw-gap-1 tw-mb-2'>
+        {weekDays.map(day => (
           <Typography
             key={day}
-            variant="caption"
-            className="tw-text-center tw-font-semibold tw-py-2"
-            component="div"
-            role="columnheader"
+            variant='caption'
+            className='tw-text-center tw-font-semibold tw-py-2'
+            component='div'
+            role='columnheader'
           >
             {day}
           </Typography>
         ))}
       </Box>
 
-      <Box className="tw-grid tw-grid-cols-7 tw-gap-1">
+      <Box className='tw-grid tw-grid-cols-7 tw-gap-1'>
         {daysInMonth.map((day: Date) => {
           const isCurrentMonth = isSameMonth(day, currentMonth)
-          const isSelected = value ? format(day, 'yyyy-MM-dd') === format(value, 'yyyy-MM-dd') : false
+          const isSelected = value
+            ? format(day, 'yyyy-MM-dd') === format(value, 'yyyy-MM-dd')
+            : false
           const isTodayDate = isToday(day)
-          const isDisabled =
-            (minDate && day < minDate) || (maxDate && day > maxDate)
+          const isDisabled = (minDate && day < minDate) || (maxDate && day > maxDate)
 
           return (
             <Box
@@ -98,12 +91,12 @@ export const Calendar = ({
                 {
                   'tw-bg-primary-500 tw-text-white': isSelected,
                   'tw-bg-gray-100': isTodayDate && !isSelected,
-                  'tw-text-gray-400': !isCurrentMonth || ((isDisabled ?? false)),
-                  'tw-cursor-not-allowed': (isDisabled ?? false),
-                  'hover:tw-bg-gray-100': !isSelected && !isDisabled && isCurrentMonth
+                  'tw-text-gray-400': !isCurrentMonth || (isDisabled ?? false),
+                  'tw-cursor-not-allowed': isDisabled ?? false,
+                  'hover:tw-bg-gray-100': !isSelected && !isDisabled && isCurrentMonth,
                 }
               )}
-              role="gridcell"
+              role='gridcell'
               aria-label={format(day, 'MMMM d, yyyy')}
               aria-selected={isSelected}
               tabIndex={isDisabled ? -1 : 0}
@@ -122,4 +115,3 @@ export const Calendar = ({
     </Box>
   )
 }
-

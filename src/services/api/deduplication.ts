@@ -11,10 +11,7 @@ class RequestDeduplication {
     return `${method}:${url}:${JSON.stringify(data || {})}`
   }
 
-  async deduplicate<T>(
-    key: string,
-    requestFn: () => Promise<T>
-  ): Promise<T> {
+  async deduplicate<T>(key: string, requestFn: () => Promise<T>): Promise<T> {
     const existing = this.pendingRequests.get(key)
 
     if (existing) {
@@ -33,7 +30,7 @@ class RequestDeduplication {
 
     this.pendingRequests.set(key, {
       promise,
-      timestamp: Date.now()
+      timestamp: Date.now(),
     })
 
     return promise
@@ -45,4 +42,3 @@ class RequestDeduplication {
 }
 
 export const requestDeduplication = new RequestDeduplication()
-

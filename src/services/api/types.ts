@@ -24,4 +24,3 @@ export interface TokenRefreshResponse {
   refreshToken: string
   expiresIn: number
 }
-

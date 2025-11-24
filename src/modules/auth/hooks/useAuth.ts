@@ -46,6 +46,6 @@ export const useAuth = (): UseAuthReturn => {
     isAuthenticated: !!user,
     login,
     register,
-    logout
+    logout,
   }
 }

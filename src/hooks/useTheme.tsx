@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, ReactNode } from 'react'
 import { ThemeProvider, CssBaseline } from '@mui/material'
 import { getTheme, ThemeMode } from '@/config/theme'
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useTheme = () => {
   const [mode, setMode] = useState<ThemeMode>(() => {
     const stored = localStorage.getItem('theme_mode')
@@ -13,7 +14,7 @@ export const useTheme = () => {
   }, [mode])
 
   const toggleTheme = () => {
-    setMode((prev) => (prev === 'light' ? 'dark' : 'light'))
+    setMode(prev => (prev === 'light' ? 'dark' : 'light'))
   }
 
   const theme = useMemo(() => getTheme(mode), [mode])
@@ -22,7 +23,7 @@ export const useTheme = () => {
     mode,
     theme,
     toggleTheme,
-    setMode
+    setMode,
   }
 }
 
@@ -36,4 +37,3 @@ export const ThemeWrapper = ({ children }: { children: ReactNode }) => {
     </ThemeProvider>
   )
 }
-

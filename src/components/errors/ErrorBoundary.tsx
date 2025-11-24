@@ -23,21 +23,21 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     this.state = {
       hasError: false,
       error: null,
-      errorInfo: null
+      errorInfo: null,
     }
   }
 
   static getDerivedStateFromError(error: Error): Partial<ErrorBoundaryState> {
     return {
       hasError: true,
-      error
+      error,
     }
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     this.setState({
       error,
-      errorInfo
+      errorInfo,
     })
 
     if (this.props.onError) {
@@ -63,7 +63,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     this.setState({
       hasError: false,
       error: null,
-      errorInfo: null
+      errorInfo: null,
     })
 
     if (onReset) {
@@ -92,57 +92,54 @@ interface ErrorFallbackProps {
   onReset: () => void
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 const ErrorFallback = ({ error, onReset }: ErrorFallbackProps) => {
   const { t } = useTranslation()
 
-  const isUndefinedError = error?.message?.includes('undefined') || 
-                          error?.message?.includes('Cannot read') ||
-                          error?.stack?.includes('undefined')
+  const isUndefinedError =
+    error?.message?.includes('undefined') ||
+    error?.message?.includes('Cannot read') ||
+    error?.stack?.includes('undefined')
 
   return (
     <Box
-      className="tw-min-h-screen tw-flex tw-items-center tw-justify-center tw-p-4 tw-bg-gray-50"
-      role="alert"
-      aria-live="assertive"
+      className='tw-min-h-screen tw-flex tw-items-center tw-justify-center tw-p-4 tw-bg-gray-50'
+      role='alert'
+      aria-live='assertive'
     >
-      <Paper
-        className="tw-max-w-md tw-w-full tw-p-6 tw-text-center"
-        elevation={3}
-      >
+      <Paper className='tw-max-w-md tw-w-full tw-p-6 tw-text-center' elevation={3}>
         <ErrorOutline
-          className="tw-text-red-500 tw-mb-4"
+          className='tw-text-red-500 tw-mb-4'
           style={{ fontSize: 64 }}
-          aria-hidden="true"
+          aria-hidden='true'
         />
 
-        <Typography variant="h5" component="h1" className="tw-mb-2 tw-font-bold">
+        <Typography variant='h5' component='h1' className='tw-mb-2 tw-font-bold'>
           {isUndefinedError ? t('errors.undefinedError') : t('errors.somethingWentWrong')}
         </Typography>
 
-        <Typography variant="body2" color="textSecondary" className="tw-mb-4">
-          {isUndefinedError
-            ? t('errors.undefinedErrorDescription')
-            : t('errors.errorDescription')}
+        <Typography variant='body2' color='textSecondary' className='tw-mb-4'>
+          {isUndefinedError ? t('errors.undefinedErrorDescription') : t('errors.errorDescription')}
         </Typography>
 
         {error && (
           <Box
-            className="tw-mb-4 tw-p-3 tw-bg-gray-100 tw-rounded tw-text-left tw-text-xs tw-font-mono tw-overflow-auto tw-max-h-32"
-            component="details"
+            className='tw-mb-4 tw-p-3 tw-bg-gray-100 tw-rounded tw-text-left tw-text-xs tw-font-mono tw-overflow-auto tw-max-h-32'
+            component='details'
           >
-            <summary className="tw-cursor-pointer tw-font-semibold tw-mb-2">
+            <summary className='tw-cursor-pointer tw-font-semibold tw-mb-2'>
               {t('errors.errorDetails')}
             </summary>
-            <pre className="tw-whitespace-pre-wrap tw-text-red-600">
+            <pre className='tw-whitespace-pre-wrap tw-text-red-600'>
               {error.message}
               {error.stack && `\n\n${error.stack}`}
             </pre>
           </Box>
         )}
 
-        <Box className="tw-flex tw-gap-2 tw-justify-center">
+        <Box className='tw-flex tw-gap-2 tw-justify-center'>
           <Button
-            variant="contained"
+            variant='contained'
             startIcon={<Refresh />}
             onClick={onReset}
             aria-label={t('errors.tryAgain')}
@@ -150,7 +147,7 @@ const ErrorFallback = ({ error, onReset }: ErrorFallbackProps) => {
             {t('errors.tryAgain')}
           </Button>
           <Button
-            variant="outlined"
+            variant='outlined'
             onClick={() => window.location.reload()}
             aria-label={t('errors.reloadPage')}
           >
@@ -161,4 +158,3 @@ const ErrorFallback = ({ error, onReset }: ErrorFallbackProps) => {
     </Box>
   )
 }
-

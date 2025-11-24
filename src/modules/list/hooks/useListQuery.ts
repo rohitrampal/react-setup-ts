@@ -1,7 +1,6 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useApiMutation } from '@/hooks/useMutation'
 import { apiClient } from '@/services/api/client'
-import { ApiResponse } from '@/services/api/types'
 
 export interface ListItem {
   id: string
@@ -25,7 +24,7 @@ const LIST_KEYS = {
   all: ['list'] as const,
   items: () => [...LIST_KEYS.all, 'items'] as const,
   item: (id: string) => [...LIST_KEYS.items(), id] as const,
-  search: (term: string) => [...LIST_KEYS.items(), 'search', term] as const
+  search: (term: string) => [...LIST_KEYS.items(), 'search', term] as const,
 }
 
 export const useListItems = (searchTerm?: string) => {
@@ -35,12 +34,12 @@ export const useListItems = (searchTerm?: string) => {
       const response = await apiClient.get<ListItem[]>('/list/items', {
         params: searchTerm ? { search: searchTerm } : undefined,
         skipCache: false,
-        ttl: 60000
+        ttl: 60000,
       })
       return response.data
     },
     staleTime: 30000,
-    gcTime: 5 * 60 * 1000
+    gcTime: 5 * 60 * 1000,
   })
 }
 
@@ -56,18 +55,18 @@ export const useCreateListItem = () => {
     },
     optimisticUpdate: {
       queryKey: Array.from(LIST_KEYS.items()),
-      updateFn: (variables) => (oldData) => {
+      updateFn: variables => oldData => {
         const old = oldData as ListItem[] | undefined
         const newItem: ListItem = {
           id: `temp-${Date.now()}`,
           name: variables.name,
           email: variables.email,
           role: variables.role,
-          status: 'Active'
+          status: 'Active',
         }
         return old ? [...old, newItem] : [newItem]
-      }
-    }
+      },
+    },
   })
 }
 
@@ -84,14 +83,12 @@ export const useUpdateListItem = () => {
     },
     optimisticUpdate: {
       queryKey: Array.from(LIST_KEYS.items()),
-      updateFn: (variables) => (oldData) => {
+      updateFn: variables => oldData => {
         const old = oldData as ListItem[] | undefined
         if (!old) return old
-        return old.map((item) =>
-          item.id === variables.id ? { ...item, ...variables } : item
-        )
-      }
-    }
+        return old.map(item => (item.id === variables.id ? { ...item, ...variables } : item))
+      },
+    },
   })
 }
 
@@ -107,12 +104,11 @@ export const useDeleteListItem = () => {
     },
     optimisticUpdate: {
       queryKey: Array.from(LIST_KEYS.items()),
-      updateFn: (variables) => (oldData) => {
+      updateFn: variables => oldData => {
         const old = oldData as ListItem[] | undefined
         if (!old) return old
-        return old.filter((item) => item.id !== variables.id)
-      }
-    }
+        return old.filter(item => item.id !== variables.id)
+      },
+    },
   })
 }
-
